@@ -1,0 +1,21 @@
+Test Plan Author: Jaziel Pauda
+same size operands
+8975
+2461
+11436
+no carry addition
+132546
+54321
+186867
+values within max size
+98126750
+2397514
+100524264
+both values greater than max int 
+3980753124
+1324786590
+5305539714
+one operand greater than max size
+4586138740
+591742866
+5177881606

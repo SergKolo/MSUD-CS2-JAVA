@@ -1,0 +1,21 @@
+Eric Ault - Test Plan Author
+values have same number of digits
+12345
+67890
+80235
+no carries
+22708
+75191
+97899
+carry for every digit
+96747968
+86596352
+183344320
+one operand outside int range
+2249847139
+2252
+2249849391
+each operand within int range but sum over int range
+2147483245
+502
+2147483747

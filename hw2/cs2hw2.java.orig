@@ -1,0 +1,60 @@
+/*******************
+Author: Sergiy Kolodyazhnyy
+Date: 09/14/2015
+Instructor: Prof.Gurka
+Purpose: Program for generating Soundex code
+	for surnames
+*******************/
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class cs2hw2
+{
+
+    /*********************
+    The control flow of the main methd is fairly straightforward.
+    The program takes file or path to file as a first argument,
+
+    **********************/
+    public static void main(String[] args) throws IOException
+    {
+        String lastName = "";
+        cs2hw2Soundex toSoundex = new cs2hw2Soundex ();
+// phase 1: getting  input from user
+        Scanner readInputKbd = new Scanner ( System.in );
+        do
+            {
+                System.out.print("Enter a surname: ");
+                lastName = readInputKbd.nextLine();
+                
+                        System.out.printf("%s\t",lastName );
+                        System.out.printf("%s",toSoundex.getSoundex(lastName));
+                        System.out.printf("\n");
+                    
+
+
+
+            }
+        while ( ! lastName.equalsIgnoreCase("quit") );
+// phase 2: get input from file
+        String listFile;
+        System.out.print("Enter filename or path to file: ");
+        listFile = readInputKbd.next();
+
+        File inputData = new File (listFile);
+        Scanner readInputFile = new Scanner ( inputData );
+
+        while ( readInputFile.hasNext()  )
+            {
+                lastName = readInputFile.nextLine();
+                System.out.printf("%s\t",lastName );
+                System.out.printf("%s",toSoundex.getSoundex(lastName));
+                System.out.printf("\n");
+            }
+        readInputFile.close();
+    }
+
+
+}

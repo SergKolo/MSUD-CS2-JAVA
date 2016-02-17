@@ -1,0 +1,21 @@
+Test file to  from Egor Muscat
+values in int range same size no carry
+234
+321
+555
+values in int range different size no carry
+23412
+146832141
+146855555
+values in int range same size with carry
+1085693
+2894614
+3980307
+values outside int range same size no carry
+321431342134214231
+234124213421341324
+555555555555555555
+values outside int range different size with carry
+123456789456789
+123456213113410709
+123579669902867498

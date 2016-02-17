@@ -1,0 +1,208 @@
+     1	/*******************
+     2	Author: Sergiy Kolodyazhnyy
+     3	Date: 09/14/2015
+     4	Instructor: Prof.Gurka
+     5	Purpose: Program for generating Soundex code
+     6		for surnames
+     7	*******************/
+     8	
+     9	import java.io.File;
+    10	import java.io.IOException;
+    11	import java.util.Scanner;
+    12	
+    13	public class cs2hw2Driver
+    14	{
+    15	
+    16	    /*********************
+    17	    The control flow of the main method is fairly straightforward.
+    18	    As required in the  point #3 of the assignment, the program
+    19	    starts with first phase, where user manually enters names, until
+    20	    they enters "nextphase" in order to go to phase 2.
+    21	    Phase 2 is where the user is prompted to enter file or path to file
+    22	    that will be analyzed.
+    23	
+    24	    As stated in the requirements, the driver class merely creates
+    25	    the object, and the driver then calls getSoundex method in
+    26	    both cases.
+    27	    **********************/
+    28	    public static void main(String[] args) throws IOException
+    29	    {
+    30	        String lastName = "";
+    31	        cs2hw2Soundex toSoundex = new cs2hw2Soundex ();
+    32	// phase 1: getting  input from user
+    33	        Scanner readInputKbd = new Scanner ( System.in );
+    34	        while ( true  )
+    35	            {
+    36	                System.out.print("Enter a surname: ");
+    37	                lastName = readInputKbd.nextLine();
+    38	                if (! lastName.equalsIgnoreCase("nextphase"))
+    39	                    {
+    40	                        toSoundex.getSoundex(lastName);
+    41	                    }
+    42	                else
+    43	                    {
+    44	                        break;
+    45	                    }
+    46	            }
+    47	// phase 2: get input from file
+    48	        String listFile;
+    49	        System.out.print("Enter filename or path to file: ");
+    50	        listFile = readInputKbd.nextLine();
+    51	// inputData object and readInputFile object are
+    52	// created here, because we need to get filename form user first
+    53	        File inputData = new File (listFile);
+    54	        Scanner readInputFile = new Scanner ( inputData );
+    55	
+    56	        while ( readInputFile.hasNext()  )
+    57	            {
+    58	                lastName = readInputFile.nextLine();
+    59	                toSoundex.getSoundex(lastName);
+    60	            }
+    61	        readInputFile.close();
+    62	    }
+    63	
+    64	
+    65	}
+     1	public class cs2hw2Soundex
+     2	{
+     3	
+     4	    public void getSoundex ( String surname  )
+     5	    {
+     6	// converting to uppercase simplifies processing
+     7	// I tried  adding if statement that would convert
+     8	// the initial letter when i==0 but then realized it
+     9	// extra code that was unnecessary
+    10	        surname = surname.toUpperCase();
+    11	        char[] surnameChars = surname.toCharArray();
+    12	        char initial = surnameChars[0]; //hold the initial letter
+    13	        String output = "";
+    14	
+    15	// because we need to avoid duplicates, we need to convert
+    16	// the initial too, hence for loop starting at 0
+    17	        for (int i = 0 ; i < surnameChars.length; i++ )
+    18	            {
+    19	                switch (surnameChars[i])
+    20	                    {
+    21	                    case 'B':
+    22	                    case 'F':
+    23	                    case 'P':
+    24	                    case 'V':
+    25	                        surnameChars[i] = '1';
+    26	                        break;
+    27	                    case 'C':
+    28	                    case 'G':
+    29	                    case 'J':
+    30	                    case 'K':
+    31	                    case 'Q':
+    32	                    case 'S':
+    33	                    case 'X':
+    34	                    case 'Z':
+    35	                        surnameChars[i] = '2';
+    36	                        break;
+    37	                    case 'D':
+    38	                    case 'T':
+    39	                        surnameChars[i] = '3';
+    40	                        break;
+    41	                    case 'L':
+    42	                        surnameChars[i] = '4';
+    43	                        break;
+    44	                    case 'M':
+    45	                    case 'N':
+    46	                        surnameChars[i] = '5';
+    47	                        break;
+    48	                    case 'R':
+    49	                        surnameChars[i] = '6';
+    50	                        break;
+    51	                    default:
+    52	                        surnameChars[i] = '0';
+    53	                        break;
+    54	                    }
+    55	            }
+    56	
+    57	// for loop that builds up the output string
+    58	// it skips duplicates and characters marked by 0 (vowels, h, and w)
+    59	        for (int i = 1; i < surnameChars.length; i++)
+    60	            {
+    61	                if ( surnameChars[i] == '0' || surnameChars[i] == surnameChars[i-1] )
+    62	                    continue;
+    63	                output += surnameChars[i];
+    64	            }
+    65	        output = initial +  output + "0000";
+    66	
+    67	        System.out.printf("%s:%s\n",surname,output.substring(0,4));
+    68	    }
+    69	
+    70	
+    71	}
+Script started on Mon 14 Sep 2015 05:15:02 AM MDT
+
+CURRENT DIR:[/home/xieerqi/bin/cs2/hw2]
+$ java s cs2hw2Driver
+Enter a surname: Smith
+SMITH:S530
+Enter a surname: Dykstra
+DYKSTRA:D236
+Enter a surname: Oliver
+OLIVER:O416
+Enter a surname: Witherspoon
+WITHERSPOON:W362
+Enter a surname: Moore
+MOORE:M600
+Enter a surname: Little
+LITTLE:L340
+Enter a surname: Cesaer
+CESAER:C260
+Enter a surname: nextphase
+Enter filename or path to file: Project 2 - Soundex data file.txt
+GREENAWALT:G654
+GRUENWALD:G654
+SMITH:S530
+SMYTHE:S530
+BOWER:B600
+LOWE:L000
+HEINNINGER:H552
+LITTLE:L340
+VANDEUSEN:V532
+DESJARDINS:D263
+FINKLESTEIN:F524
+SOUNDEX:S532
+STEIN:S350
+PROVENZANO:P615
+GONZALES:G524
+GONSALES:G524
+NG:N200
+SAKAMORU:S256
+WANAMAKER:W552
+LIAO:L000
+ALKOWARIZMI:A426
+ZILBERSCHLAG:Z416
+WOLFF:W410
+DIJKSTRA:D236
+CHEVROLET:C164
+HERSCHEL:H624
+ZHOU:Z000
+VEMULAKONDA:V542
+STUDEBAKER:S331
+DEUTSCHER:D326
+YANG:Y520
+VILHJALMSSON:V424
+VAVRA:V160
+ZAHRADNIK:Z635
+EINSTEIN:E523
+WALDO:W430
+ADRIAANSEN:A365
+MACGREGOR:M262
+BRANDT:B653
+CHU:C000
+LLEWELLYN:L450
+RHYDDERCH:R362
+HEIMIRSSON:H562
+SCHOVAJSA:S120
+STRNAD:S365
+DOMINGUEZ:D552
+CAVANAGH:C152
+
+CURRENT DIR:[/home/xieerqi/bin/cs2/hw2]
+$ exit
+
+Script done on Mon 14 Sep 2015 05:16:12 AM MDT

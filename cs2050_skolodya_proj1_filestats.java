@@ -1,0 +1,65 @@
+/*
+Author:  Serg Kolo
+Date: Aug 25, 2015
+Class: CS2050, Fall 2015
+Purpose: Line, Letter, and Digit counter
+*/
+
+import java.util.Scanner;
+import java.io.*;
+
+public class cs2050_skolodya_proj1_filestats
+{
+    public static void main (String[] args)
+    {
+        System.out.println(args.length);
+
+        for (int i=0; i<args.length; i++)
+            {
+                try
+                    {
+                        countLinesChars(args[i]);
+                    }
+                catch (IOException e)
+                    {
+                        System.err.println(args[i] + "File not found");
+                    }
+            }
+    }
+
+    public static void countLinesChars( String filename ) throws IOException
+    {
+        File inputFile  = new File (filename);
+        Scanner readFile = new Scanner(inputFile);
+        int lineCount=0,charCount=0,digitCount=0;
+
+        while (readFile.hasNext())
+            {
+                String currentLine = readFile.nextLine();
+
+                lineCount++;
+
+                for (int j = 0 ; j < currentLine.length(); j++)
+                    {
+
+                        if ( Character.isLetter(currentLine.charAt(j)  ) )
+                            {
+                                charCount++;
+                            }
+                        else if ( Character.isDigit(currentLine.charAt(j) ) )
+                            {
+                                digitCount++;
+                            }
+                    }
+
+
+            }
+
+        readFile.close();
+        System.out.println("File:" + filename );
+        System.out.println("LineCount: " + lineCount +" CharCount: " + charCount + " Digits: " + digitCount );
+    }
+
+
+
+}
